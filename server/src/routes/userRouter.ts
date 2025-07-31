@@ -7,8 +7,7 @@ import { getIst } from "../helpers/getIst";
 import { authenticate } from "../middlewares/authenticate";
 import { prisma } from "../db/db";
 import signupSchema from "../schemaValidation/loginCredsValidation";
-import signingSchema from "../schemaValidation/loginCredsValidation";
-import { z } from "zod";
+import { v4 as uuidv4 } from "uuid"
 
 
 export const userRouter = Router();
@@ -27,6 +26,7 @@ userRouter.post("/signup", async (req: Request, res: Response) => {
         }
 
         const { username, password } = validatedData.data;
+        
         if(!username || !password) {
             res.status(400).json({
                 message: "Input field can't be empty."
@@ -51,6 +51,7 @@ userRouter.post("/signup", async (req: Request, res: Response) => {
         console.log(getIst());
         const newUser = await prisma.user.create({
             data : {
+                id: uuidv4(),
                 username: username,
                 password : hashedPassword,
                 joined_at : getIst(),
@@ -100,18 +101,19 @@ userRouter.post("/signup", async (req: Request, res: Response) => {
 //................................ LOGIN ...........................................//
 userRouter.post("/signin", async (req: Request, res:  Response) => {
     try {
-        const validatedData = signupSchema.safeParse(req.body);
-        console.log("ZOD schema validated Credentials = ", validatedData.data)
-        if(!validatedData.success) {
-            res.status(400).json({
-                success : false, 
-                Error : validatedData.error.errors,
-                message : "Invalid characters entered."
-            })
-            return;
-        }
+        // const validatedData = signupSchema.safeParse(req.body);
+        // console.log("ZOD schema validated Credentials = ", validatedData.data)
+        // if(!validatedData.success) {
+        //     res.status(400).json({
+        //         success : false, 
+        //         Error : validatedData.error.errors,
+        //         message : "Invalid characters entered."
+        //     })
+        //     return;
+        // }
 
-        const { username, password } = validatedData.data;
+        // const { username, password } = validatedData.data;
+        const { username, password } = req.body;
         // getIst()
         if(!username || !password) {
             res.status(400).json({
@@ -223,5 +225,15 @@ userRouter.post("/logout", (req :Request, res: Response) => {
     } catch (error) {
         res.status(500).json({error : "Internal server error. Try again."});
         return;
+    }
+})
+
+//................................ CHANGE PASSWORD ..........................................//
+userRouter.patch("/chnagePassword", async (req: Request, res: Response) => {
+    const user = req.user;
+    try {
+        
+    } catch (error) {
+        
     }
 })

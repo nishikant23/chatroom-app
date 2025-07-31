@@ -1,5 +1,5 @@
 import { DashLeftBar } from "./DashLeftBar"
-import {  memo, useState } from "react"
+import {  memo, useEffect, useState } from "react"
 import { ProfileBox } from "./ProfileBox";
 import { useSelector } from "react-redux"
 import { componentMap } from "../types/componentMap";
@@ -10,10 +10,12 @@ import { ToggleSideBarBtn } from "./smalls/ToggleSideBarBtn";
 import { ToggleProfileIconBtn } from "./smalls/ToggleProfileIconBtn";
 import { AllRooms } from "./rooms/AllRooms";
 
+
 export const Navbar = memo(() => {
 
     const [ clickedContent, setClickedContent ] = useState<boolean>(false);
     const [ ellipsisClicked, setEllipsisClicked ] = useState<boolean>(false);
+    const [ dasboardLeftState, setDasboardLeftState ] = useState<boolean>(false);
 
     const sideBarTextSelector = useSelector((state : RootType) => state);
     const key = sideBarTextSelector.sideBarTextState.sideBarText
@@ -27,6 +29,18 @@ export const Navbar = memo(() => {
     const toggleProfileBar = () => {
         setEllipsisClicked((curr) => !curr);
     }
+
+    useEffect(() => {
+        if(sideBarTextSelector.sideBarTextState.sideBarText === "All Rooms") {
+            setClickedContent(false);
+            setDasboardLeftState(true)
+        }
+        if(clickedContent) {
+            setDasboardLeftState(false)
+        }
+    }, [sideBarTextSelector.sideBarTextState.sideBarText])
+        
+    
      
     return <div  className="realtive h-screen"> 
     {/* //because as per contents its increasing its height vericaly. */}
@@ -48,19 +62,6 @@ export const Navbar = memo(() => {
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M17.982 18.725A7.488 7.488 0 0 0 12 15.75a7.488 7.488 0 0 0-5.982 2.975m11.963 0a9 9 0 1 0-11.963 0m11.963 0A8.966 8.966 0 0 1 12 21a8.966 8.966 0 0 1-5.982-2.275M15 9.75a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
                             </svg>
                         } />
-                    {/* <button onClick={() => {
-                            setEllipsisClicked(!ellipsisClicked);
-                            // alert(ellipsisClicked)
-                        }}>
-                            <svg xmlns="http://www.w3.org/2000/svg" 
-                                fill="none" 
-                                viewBox="0 0 24 24" 
-                                stroke-width="1.5" 
-                                stroke="currentColor" 
-                                className="size-10 border border-gray-700 rounded-full p-1 hover:scale-105 bg-slate-100 hover:text-slate-50 hover:bg-gradient-to-tr from-red-600 via-black to-blue-600 transition duration-300 ease-in-out mr-4">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M17.982 18.725A7.488 7.488 0 0 0 12 15.75a7.488 7.488 0 0 0-5.982 2.975m11.963 0a9 9 0 1 0-11.963 0m11.963 0A8.966 8.966 0 0 1 12 21a8.966 8.966 0 0 1-5.982-2.275M15 9.75a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
-                            </svg>
-                    </button> */}
                     </div>
                 </div>
 
@@ -91,7 +92,9 @@ export const Navbar = memo(() => {
                 Rather think in a way, w-max sures, the Sebar/profile bar z-index not increased other content */}
                 <div className={`w-max leftSideBar  justify-start transform transition-transform duration-300  ease-in-out 
                     ${clickedContent ? "translate-x-0 ": "-translate-x-full"} lg:translate-x-0 ` }>
-                        <DashLeftBar/>
+                        {dasboardLeftState ? <></> : <DashLeftBar/>}
+                        {/* {clickedContent ? <DashLeftBar/> : <></> } */}
+                        
                 </div> 
 
                 <div className={`w-max profileBar block absolute top-28 right-3 
