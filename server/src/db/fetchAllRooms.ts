@@ -1,7 +1,7 @@
 import { prisma } from "./db"
 
 
-export const fetchAllRooms = async (userId: number) => {
+export const fetchAllRooms = async (userId: string) => {
     return await prisma.user.findUnique({
                     where : {
                         id : userId //to this user 

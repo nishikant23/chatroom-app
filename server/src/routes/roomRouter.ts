@@ -9,6 +9,7 @@ import { updateRoomParticipants } from "../db/updateRoomParticipants";
 import { checkUserInRoom } from "../db/checkUserInRoom";
 import { fetchAllRooms } from "../db/fetchAllRooms";
 import { userObject } from "../types/userTyes";
+import { v4 as uuidv4 } from "uuid"
 
 export const roomRouter = Router();
 
@@ -47,6 +48,7 @@ roomRouter.post("/create",
 
             const newRoom = await prisma.room.create({
                 data : {
+                    id: uuidv4(),
                     room_name : roomName,
                     room_description : roomDescription,
                     participants: 0,
@@ -162,13 +164,14 @@ roomRouter.get("/members",
                 return;
             }
             //Convert roomId to number
-            const id = parseInt(roomId as string);
+            // const id = parseInt(roomId as string);
+            const id = roomId.toString();
             //NaN - not a number
             //checks isNaN - is not a number(id)
-            if(isNaN(id)) {
-                res.status(400).json({ error: 'roomId must be a number' });
-                return;
-            }
+            // if(isNaN(id)) {
+            //     res.status(400).json({ error: 'roomId must be a number' });
+            //     return;
+            // }
 
             //Object of this Room
             //Object contains multiple K:V pairs,

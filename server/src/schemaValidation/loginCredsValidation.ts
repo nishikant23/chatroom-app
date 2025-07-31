@@ -8,14 +8,14 @@ const forbiddenCharacters = /['";\-#/\\*%_()=+|]/;
         .string()
         .min(3, {message : "Name must be at least 3 characters long"})
         .max(100, {message : "Name must be at most 50 characters long"})
-        .regex(/^[a-zA_Z0-9]+$/, "Username must only contain letters and numbers")
+        .regex(/^[a-zA-Z0-9]+$/, "Username must only contain letters and numbers")
         .refine((val) => !forbiddenCharacters.test(val), {
             message: "Username contains invalid characters",
           }),
     
     password : z
         .string()
-        .min(8, {message : "Password must contain at least 8 characters"})
+        .min(4, {message : "Password must contain at least 4 characters"})
         .max(255, {message : "Password must contain at least 8 characters"})
         .refine((val) => !forbiddenCharacters.test(val), {
             message: "Password contains invalid characters",

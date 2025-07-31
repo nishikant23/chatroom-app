@@ -45,10 +45,10 @@ import { Types } from "./enum";
 
 
 export interface basePayload {
-    userId : number,
-    roomId : number,
-    chatId : number,
-    roomAdminId:  number,
+    userId : string,
+    roomId : string,
+    chatId : string,
+    roomAdminId:  string,
     roomAdminName : string,
     username : string,
     roomName : string,
@@ -77,7 +77,7 @@ export interface chatPayload {
     type : string,
     payload :  chatMessage & Pick<basePayload, "roomId" | "roomName"> & {
         messageId : string;
-        senderId : number, //curr logged in user whod sent the message.
+        senderId : string, //curr logged in user whod sent the message.
         senderName : string, //curr logged in user whod sent the message.
     };
 }
@@ -85,9 +85,9 @@ export interface chatPayload {
 export interface dbChatPayload {
     id : string, 
     text : string, 
-    user_id : number,
+    user_id : string,
     sender_name : string,
-    room_id : number, 
+    room_id : string, 
     sent_at : Date,
 }
 
@@ -102,8 +102,8 @@ export interface roomCreatePayload {
 export interface roomJoinPayload {
     type: Types.joinRoom,
     payload : Pick<basePayload, "roomId" | "roomName" | "roomDescription" > & {
-        newUserEntryId: number,
-        joinedUserId : number,
+        newUserEntryId: string,
+        joinedUserId : string,
         joinedUserName : string,
         roomCreatedAt : string,
     }
@@ -113,13 +113,13 @@ export interface roomJoinPayload {
 export interface roomPayload {
     type : Types.enterRoom,
     payload :{
-        roomId: number,
+        roomId: string,
         roomName: string,
         roomDescription: string | null,
         roomParticipants: number,
-        roomAdminId: number,
+        roomAdminId: string,
         roomCreatedAt: string,
-        currentUserId : number,
+        currentUserId : string,
         currentUsername : string,
     }  
 }
