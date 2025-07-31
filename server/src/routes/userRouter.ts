@@ -15,7 +15,7 @@ export const userRouter = Router();
 userRouter.post("/signup", async (req: Request, res: Response) => {
     try {
         const validatedData = signupSchema.safeParse(req.body);
-        console.log("ZOD schema validated Credentials = ", validatedData.data)
+        // console.log("ZOD schema validated Credentials = ", validatedData.data)
         if(!validatedData.success) {
             res.status(400).json({
                 success : false, 
@@ -24,8 +24,9 @@ userRouter.post("/signup", async (req: Request, res: Response) => {
             })
             return;
         }
-
+        
         const { username, password } = validatedData.data;
+        console.log("Entered user details : ", username ," & ", password)
         
         if(!username || !password) {
             res.status(400).json({

@@ -1,29 +1,29 @@
 import { WebSocket } from "ws";
 
 export interface connectionState {
-    userId : number,
-    roomId : number,
+    userId : string,
+    roomId : string,
     connection : WebSocket | null, 
 }
 export interface userState {
-    userId: number,
+    userId: string,
     
     username : string,
     chatsArr : number[], //allchats id, array
-    roomId: number,
+    roomId: string,
 }
 
 export interface roomState {
-    roomId: number,
+    roomId: string,
     roomName : string,
-    usersArr : number[], //all users of this room, userId array
+    usersArr : string[], //all users of this room, userId array
 }
 
 export interface chatState {
     messageId : number, //currently sent chat id generated.
-    userId : number, //which user Chat
+    userId : string, //which user Chat
     username : string,
-    roomId : number, //chat belongs to which room
+    roomId : string, //chat belongs to which room
     roomName : string,
     text : string, //chat sent by user.
     sender : string, //"me"(come from UI) --> "others"(overrides when sent to other all users of this room for UI seperation purpose of message, so that sender doenot get his message too.)

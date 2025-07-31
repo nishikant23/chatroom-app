@@ -10,11 +10,11 @@ export interface userPayload {
 }
 
 export interface tokenPayload extends JwtPayload{
-    userId : number,
+    userId : string,
     username : string,
 }
 export interface userObject {
-    userId: number;
+    userId: string;
     username: string;
     userBio: string | null;
     joinedAt: string;

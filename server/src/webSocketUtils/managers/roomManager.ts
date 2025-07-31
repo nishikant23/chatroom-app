@@ -8,7 +8,7 @@ export const roomManager = (parsedData: chatPayload) => {
     //Chk, room already present or not.
     if(index < 0){
         //Now add room in roomArr[]
-        allUsers.roomArr.push({
+        allUsers.roomArr.push({ //pushed to last of an array, hence, roomArr.len-1
             roomId : parsedData.payload.roomId,
             roomName : parsedData.payload.roomName,
             usersArr : [],

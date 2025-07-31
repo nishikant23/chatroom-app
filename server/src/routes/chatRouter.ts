@@ -72,6 +72,7 @@ chatRouter.post("/send",
                     user_id : user.id,
                     room_id : roomId,
                     sender_name : user.username,
+                    userToRoom_id : userToRoom_Id,
                 }
             })
             console.log("From CHAT ROUTER, ChatId = ",response.id, " && Chat text = ",response.text)
@@ -105,14 +106,15 @@ chatRouter.get("/getAllChats",
             return;
         }
         //Convert roomId to number
-        const id = parseInt(roomId as string);
+        // const id = parseInt(roomId as string);
+        const id = roomId.toString()
 
         //NaN - not a number
         //checks isNaN - is not a number(id)
-        if(isNaN(id)) {
-            res.status(400).json({ error: 'roomId must be a number' });
-            return;
-        }
+        // if(isNaN(id)) {
+        //     res.status(400).json({ error: 'roomId must be a number' });
+        //     return;
+        // }
         
 
         const allChats = await prisma.room.findUnique({
