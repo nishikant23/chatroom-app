@@ -32,7 +32,7 @@ chatRouter.post("/send",
                     id : roomId, //curr-roomID 
                 },
                 include : {
-                    users : { // has 2-raltions User-Detail & userToRoom detail.
+                    users : { // has 2-relations User-Detail & userToRoom detail.
                         include : {
                             // room : true, //this will give 1 more = all roomDetails 
                             user : true // only userDetails.
@@ -70,6 +70,7 @@ chatRouter.post("/send",
                     text : text,
                     sent_at: timeStamp,
                     user_id : user.id,
+                    room_id : roomId,
                     sender_name : user.username,
                 }
             })
